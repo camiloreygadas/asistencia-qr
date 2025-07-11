@@ -2,111 +2,102 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Acceso Administrador</title>
+  <title>Registro de jornada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Fonts + Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       background: linear-gradient(to right, #0099f7, #00c6ff);
-      font-family: 'Montserrat', sans-serif;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
     }
-
     .form-container {
       background: white;
-      padding: 40px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      width: 100%;
-      max-width: 400px;
-      animation: fadeIn 1.2s ease-in-out;
+      max-width: 600px;
+      margin: auto;
+      animation: fadeIn 1s ease-in-out;
     }
-
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     h2 {
       text-align: center;
       margin-bottom: 25px;
-      font-weight: 600;
       color: #333;
     }
-
     label {
-      display: block;
-      margin-bottom: 8px;
       font-weight: 600;
-      color: #555;
+      margin-top: 10px;
     }
-
-    input[type="text"],
-    input[type="password"] {
+    input, select {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
+      padding: 10px;
+      margin-top: 4px;
+      margin-bottom: 15px;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-      transition: box-shadow 0.3s;
     }
-
-    input:focus {
-      outline: none;
-      box-shadow: 0 0 5px #0099f7;
-    }
-
     button {
       width: 100%;
-      background-color: #0099f7;
+      background-color: #00c6ff;
       color: white;
       padding: 12px;
-      font-weight: bold;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
+      font-weight: bold;
       transition: background-color 0.3s;
     }
-
     button:hover {
-      background-color: #007acc;
+      background-color: #007bff;
     }
-
-    .icon-login {
-      display: flex;
-      justify-content: center;
-      font-size: 35px;
-      color: #0099f7;
-      margin-bottom: 10px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .admin-access {
+      margin-top: 30px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="form-container">
-    <div class="icon-login"><i class="bi bi-shield-lock-fill"></i></div>
-    <h2>Acceso Administrador</h2>
-    <form method="POST">
-      <label for="usuario">Usuario</label>
-      <input type="text" id="usuario" name="usuario" required>
+    <h2>📝 Registro de jornada</h2>
+    <form action="/registrar" method="POST">
+      <label for="rut">RUT:</label>
+      <input type="text" id="rut" name="rut" required>
 
-      <label for="clave">Contraseña</label>
-      <input type="password" id="clave" name="clave" required>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
 
-      <button type="submit"><i class="bi bi-box-arrow-in-right"></i> Ingresar</button>
+      <label for="turno">Turno:</label>
+      <select id="turno" name="turno" required>
+        <option value="5x2">5x2</option>
+        <option value="14x14">14x14</option>
+        <option value="7x7">7x7</option>
+      </select>
+
+      <label for="pieza">Pieza:</label>
+      <input type="text" id="pieza" name="pieza" required>
+
+      <label for="tipo">Marcación:</label>
+      <select id="tipo" name="tipo" required>
+        <option value="Entrada">Entrada</option>
+        <option value="Salida">Salida</option>
+      </select>
+
+      <button type="submit">✅ Registrar asistencia</button>
     </form>
+
+    <div class="admin-access">
+      <a href="/login">
+        <button style="margin-top:20px;">🔐 Acceso Administrador</button>
+      </a>
+    </div>
   </div>
 </body>
 </html>
+
 
 
 

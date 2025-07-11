@@ -1,15 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, send_file, url_for
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from datetime import datetime
-from io import BytesIO
 import pandas as pd
 import pytz
 import os
 
 app = Flask(__name__)
-app.secret_key = '280916'  # Cámbiala por una clave más segura
+app.secret_key = 'clave_segura_2025'
 
-# 🔐 Configuración Login
+# 🔐 Configuración de Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -18,19 +17,19 @@ class Usuario(UserMixin):
         self.id = id
 
 usuarios_validos = {
-    'admin': '280916'  # Cambia esto por tu clave real
+    'admin': 'super123'
 }
 
 @login_manager.user_loader
 def load_user(user_id):
     return Usuario(user_id)
 
-# 📝 Ruta para el formulario
+# 📝 Ruta de registro público
 @app.route('/')
 def formulario():
     return render_template('formulario.html')
 
-# 📌 Ruta para guardar el registro
+# 📥 Guardado de jornada
 @app.route('/registrar', methods=['POST'])
 def registrar():
     rut = request.form['rut']
@@ -45,17 +44,17 @@ def registrar():
     nuevo = pd.DataFrame([[rut, nombre, turno, pieza, tipo, fecha]],
                          columns=['RUT', 'Nombre', 'Turno', 'Pieza', 'Marcación', 'FechaHora'])
 
-    archivo_excel = 'registro.xlsx'
-    if os.path.exists(archivo_excel):
-        existente = pd.read_excel(archivo_excel)
+    archivo = 'registro.xlsx'
+    if os.path.exists(archivo):
+        existente = pd.read_excel(archivo)
         final = pd.concat([existente, nuevo], ignore_index=True)
     else:
         final = nuevo
 
-    final.to_excel(archivo_excel, index=False)
+    final.to_excel(archivo, index=False)
     return f"✅ Registro exitoso: {nombre} ({rut}) - {tipo} a las {fecha}"
 
-# 🔒 Ruta de login
+# 🔑 Login solo para descargar registros
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -68,26 +67,22 @@ def login():
             return "❌ Usuario o contraseña incorrecta."
     return render_template('login.html')
 
-# 🔓 Ruta de logout
+# 🚪 Cierre de sesión
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/')
 
-# 📥 Ruta protegida para descargar el Excel
+# 📥 Descarga protegida del Excel
 @app.route('/descargar')
 @login_required
 def descargar_excel():
-    archivo_excel = 'registro.xlsx'
-    if os.path.exists(archivo_excel):
-        return send_file(archivo_excel, as_attachment=True)
+    archivo = 'registro.xlsx'
+    if os.path.exists(archivo):
+        return send_file(archivo, as_attachment=True)
     else:
         return "❌ No hay registros disponibles para descargar."
-
-# 🧪 Ejecutar localmente con debug
-if __name__ == '__main__':
-
     app.run(debug=True)
 
 

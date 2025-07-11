@@ -7,7 +7,7 @@ import pytz
 import os
 
 app = Flask(__name__)
-app.secret_key = 'clave_secreta_123'  # Cámbiala por una clave más segura
+app.secret_key = '280916'  # Cámbiala por una clave más segura
 
 # 🔐 Configuración Login
 login_manager = LoginManager()
@@ -18,7 +18,7 @@ class Usuario(UserMixin):
         self.id = id
 
 usuarios_validos = {
-    'admin': 'tu_contraseña'  # Cambia esto por tu clave real
+    'admin': '280916'  # Cambia esto por tu clave real
 }
 
 @login_manager.user_loader

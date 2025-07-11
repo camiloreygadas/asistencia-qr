@@ -32,6 +32,9 @@ def registrar():
     final.to_excel(archivo_excel, index=False)
 
     return f"✅ Registro exitoso: {nombre} ({rut}) - {tipo} a las {fecha}"
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 
 
